@@ -36,8 +36,8 @@ public class FeedsController {
 	}
 
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.GET, value = "/getFeeds")
-	public List<Post> getFeeds(@RequestParam String email) {
+	@RequestMapping(method = RequestMethod.GET, value = "/getFeed")
+	public List<Post> getFeed(@RequestParam String email) {
 		List<Post> collect = posts.stream().filter(post -> post.getEmailId().equalsIgnoreCase(email))
 				.collect(Collectors.toList());
 		return collect;

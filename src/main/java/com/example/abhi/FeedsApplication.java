@@ -1,5 +1,7 @@
 package com.example.abhi;
 
+import java.util.Collections;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,12 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FeedsApplication {
 
 	public static void main(String[] args) {
-		loadData();
-		SpringApplication.run(FeedsApplication.class, args);
+		SpringApplication app = new SpringApplication(FeedsApplication.class);
+		app.setDefaultProperties(Collections.singletonMap("server.port", args[0]));
+		app.run(args);
+		System.out.println(args[0]);
 	}
 
-	private static void loadData() {
-		
-	}
 
 }
