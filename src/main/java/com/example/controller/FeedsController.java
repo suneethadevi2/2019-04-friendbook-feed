@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Post;
+import com.example.exception.FriendBookFeedException;
 import com.example.service.FeedService;
 
 @RestController
@@ -55,7 +56,11 @@ public class FeedsController {
 	public List<Post> getFeeds(@RequestParam final String email,
 			@RequestParam(required = false, defaultValue = "0") final int start,
 			@RequestParam(required = false, defaultValue = "-1") final int count) {
-		return feedService.getPostForUser(email, start, count);
+		try {
+			return feedService.getPostForUser(email, start, count);
+		} catch (FriendBookFeedException e) {
+			return new ArrayList<Post>();
+		}
 		// final List<Post> collect = posts.stream().filter(post ->
 		// post.getEmailId().equalsIgnoreCase(email))
 		// .collect(Collectors.toList());

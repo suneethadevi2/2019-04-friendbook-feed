@@ -11,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.example.entity.FeedData;
 import com.example.entity.Post;
+import com.example.exception.FriendBookFeedException;
 
 @Service
 public class FeedService {
@@ -18,7 +19,7 @@ public class FeedService {
 	private final static Map<String, FeedData> cachedFeed = new ConcurrentHashMap<>();
 	private final static long TIME_TO_LIVE = 60000; // 1 min
 
-	public List<Post> getPostForUser(final String email, final int start, final int count) {
+	public List<Post> getPostForUser(final String email, final int start, final int count) throws FriendBookFeedException {
 		FeedData feedData = cachedFeed.get(email);
 		List<Post> retrievedPostsForFeed = new ArrayList<>();
 		if (feedData == null || isFeedOld(feedData.getLastUpdated())) {
@@ -31,13 +32,19 @@ public class FeedService {
 				feedData = getFeedData(email, retrievedPostsForFeed, start, count);
 
 				updateCache(email, feedData, start);
-			} catch (final Exception e) {
-				System.out.print(" Exception occured while fetching posts " + e);
-			} finally {
-				if (feedData != null) {
-					return feedData.getPost();
-				}
-			}
+			} 
+			catch (final Exception e)
+            {
+                System.out.print(" Exception occured while fetching posts " + e);
+
+                if (feedData != null)
+                {
+                    return feedData.getPost();
+                }
+
+                throw new FriendBookFeedException(500, "Couldn't find any posts at this moment. Please try later!!");
+            }
+
 		}
 
 		return retrievedPostsForFeed;
