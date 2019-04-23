@@ -10,38 +10,57 @@ public class FeedData {
 	private Date lastUpdated;
 	private int count;
 	private int start;
-	
+
+	public FeedData(String email, List<Post> retrievedPostsForFeed, Date date, int start2, int count2) {
+		super();
+		this.userEmail = email;
+		this.post = retrievedPostsForFeed;
+		this.lastUpdated = date;
+		this.count = count2;
+		this.start = start2;
+
+	}
+
 	public String getUserEmail() {
 		return userEmail;
 	}
+
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
+
 	public List<Post> getPost() {
 		return post;
 	}
+
 	public void setPost(List<Post> post) {
 		this.post = post;
 	}
+
 	public Date getLastUpdated() {
 		return lastUpdated;
 	}
+
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
-	
+
 	public int getCount() {
 		return count;
 	}
+
 	public void setCount(int count) {
 		this.count = count;
 	}
+
 	public int getStart() {
 		return start;
 	}
+
 	public void setStart(int start) {
 		this.start = start;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -51,6 +70,7 @@ public class FeedData {
 		result = prime * result + ((userEmail == null) ? 0 : userEmail.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -77,5 +97,5 @@ public class FeedData {
 			return false;
 		return true;
 	}
-	
+
 }
