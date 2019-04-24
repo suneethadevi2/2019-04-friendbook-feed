@@ -7,3 +7,5 @@ services:
       context: .
     ports:
       - 8080
+    environment:
+      - POST_SERVICE_URL = http://postssvc:8080
