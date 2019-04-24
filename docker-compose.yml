@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  feedsvc:
+    build:
+      dockerfile: feedService.Dockerfile
+      context: .
+    ports:
+      - 8080
