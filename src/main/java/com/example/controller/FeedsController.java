@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.entity.FeedData;
 import com.example.entity.Post;
 import com.example.exception.FriendBookFeedException;
 import com.example.service.FeedService;
@@ -28,20 +28,19 @@ public class FeedsController {
 	static {
 		for (int i = 0; i < 10; i++) {
 			Post post = new Post();
-			post.setEmailId("abhilash - " + Integer.toString(i));
+			post.setUserMailId("abhilash - " + Integer.toString(i));
 			post.setId(Integer.toString(i));
-			post.setPostText("this is post number " + i);
-			post.setTimeStamp(new Date());
+			post.setPostMessage("this is post number " + i);
+			post.setLastUpdated(new Date().toString());
 			posts.add(post);
 		}
 	}
 
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET, value = "/getFeed")
-	public List<Post> getFeed(@RequestParam String email) {
-		List<Post> collect = posts.stream().filter(post -> post.getEmailId().equalsIgnoreCase(email))
-				.collect(Collectors.toList());
-		return collect;
+	public FeedData getFeed(@RequestParam String email) {
+		
+		return null;
 	}
 
 	@ResponseBody
@@ -53,13 +52,13 @@ public class FeedsController {
 
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET, value = "/getFeeds")
-	public List<Post> getFeeds(@RequestParam final String email,
+	public FeedData getFeeds(@RequestParam final String email,
 			@RequestParam(required = false, defaultValue = "0") final int start,
 			@RequestParam(required = false, defaultValue = "-1") final int count) {
 		try {
 			return feedService.getPostForUser(email, start, count);
 		} catch (FriendBookFeedException e) {
-			return new ArrayList<Post>();
+			return new FeedData(null, new ArrayList<Post>(), new Date(), 0, -1);
 		}
 		// final List<Post> collect = posts.stream().filter(post ->
 		// post.getEmailId().equalsIgnoreCase(email))

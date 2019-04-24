@@ -19,7 +19,7 @@ public class FeedService {
 	private final static Map<String, FeedData> cachedFeed = new ConcurrentHashMap<>();
 	private final static long TIME_TO_LIVE = 60000; // 1 min
 
-	public List<Post> getPostForUser(final String email, final int start, final int count) throws FriendBookFeedException {
+	public FeedData getPostForUser(final String email, final int start, final int count) throws FriendBookFeedException {
 		FeedData feedData = cachedFeed.get(email);
 		List<Post> retrievedPostsForFeed = new ArrayList<>();
 		if (feedData == null || isFeedOld(feedData.getLastUpdated())) {
@@ -27,7 +27,7 @@ public class FeedService {
 				retrievedPostsForFeed = new ArrayList<>(); // TODO make rest call
 
 				if (CollectionUtils.isEmpty(retrievedPostsForFeed)) {
-					return cachedFeed.get(email).getPost();
+					return cachedFeed.get(email);
 				}
 				feedData = getFeedData(email, retrievedPostsForFeed, start, count);
 
@@ -39,7 +39,7 @@ public class FeedService {
 
                 if (feedData != null)
                 {
-                    return feedData.getPost();
+                    return feedData;
                 }
 
                 throw new FriendBookFeedException(500, "Couldn't find any posts at this moment. Please try later!!");
@@ -47,7 +47,7 @@ public class FeedService {
 
 		}
 
-		return retrievedPostsForFeed;
+		return feedData;
 	}
 
 	/**

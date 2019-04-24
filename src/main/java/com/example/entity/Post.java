@@ -13,9 +13,10 @@ public class Post implements Serializable {
 
 	private final static long serialVersionUID = 1L;
 	private String id;
-	private String postText;
-	private String emailId;
-	private Date timeStamp;
+	private String postMessage;
+    private String userMailId;
+    private String lastUpdated;
+    private String status;
 
 	public String getId() {
 		return id;
@@ -25,28 +26,36 @@ public class Post implements Serializable {
 		this.id = id;
 	}
 
-	public String getPostText() {
-		return postText;
+	public String getPostMessage() {
+		return postMessage;
 	}
 
-	public void setPostText(String postText) {
-		this.postText = postText;
+	public void setPostMessage(String postMessage) {
+		this.postMessage = postMessage;
 	}
 
-	public String getEmailId() {
-		return emailId;
+	public String getUserMailId() {
+		return userMailId;
 	}
 
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+	public void setUserMailId(String userMailId) {
+		this.userMailId = userMailId;
 	}
 
-	public Date getTimeStamp() {
-		return timeStamp;
+	public String getLastUpdated() {
+		return lastUpdated;
 	}
 
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setLastUpdated(String lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override

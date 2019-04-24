@@ -10,7 +10,8 @@ public class FeedData {
 	private Date lastUpdated;
 	private int count;
 	private int start;
-
+	private String message;
+	
 	public FeedData(String email, List<Post> retrievedPostsForFeed, Date date, int start2, int count2) {
 		super();
 		this.userEmail = email;
@@ -59,6 +60,14 @@ public class FeedData {
 
 	public void setStart(int start) {
 		this.start = start;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	@Override
