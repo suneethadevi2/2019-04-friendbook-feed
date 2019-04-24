@@ -58,7 +58,7 @@ public class FeedsController {
 		try {
 			return feedService.getPostForUser(email, start, count);
 		} catch (FriendBookFeedException e) {
-			return new FeedData(null, new ArrayList<Post>(), new Date(), 0, -1);
+			return new FeedData(email, new ArrayList<Post>(), new Date(), 0, -1);
 		}
 		// final List<Post> collect = posts.stream().filter(post ->
 		// post.getEmailId().equalsIgnoreCase(email))

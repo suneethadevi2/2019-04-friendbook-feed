@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -24,7 +25,7 @@ public class HttpClient {
 	
 	
 
-	public static void demoGetRESTAPI() throws Exception {
+	public static List<Post> getVisiblePostsFor(String mailId) throws Exception {
 		try {
 			// Define a HttpGet request; You can choose between HttpPost, HttpDelete or
 			// HttpPut also.
@@ -33,11 +34,11 @@ public class HttpClient {
 			{
 				REQUEST_URL = DEFAULT_REQUEST_URL;
 			}
-			HttpGet getRequest = new HttpGet(REQUEST_URL);
+			HttpRequestBase getRequest = new HttpGet(REQUEST_URL+"?userMailId="+mailId);
 
 			// Set the API media type in http accept header
 			getRequest.addHeader("accept", "application/json");
-
+			
 			// Send the request; It will immediately return the response in HttpResponse
 			// object
 			HttpResponse response = httpClient.execute(getRequest);
@@ -68,6 +69,7 @@ public class HttpClient {
 			});
 			// Verify the populated object
 			System.out.println(posts);
+			return posts;
 		} finally {
 			// Important: Close the connect
 			httpClient.close();
