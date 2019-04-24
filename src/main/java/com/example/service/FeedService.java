@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.example.entity.FeedData;
 import com.example.entity.Post;
 import com.example.exception.FriendBookFeedException;
+import com.example.httpclient.HttpClient;
 
 @Service
 public class FeedService {
@@ -19,6 +21,9 @@ public class FeedService {
 	private final static Map<String, FeedData> cachedFeed = new ConcurrentHashMap<>();
 	private final static long TIME_TO_LIVE = 60000; // 1 min
 
+	@Autowired
+	private HttpClient httpClient;
+	
 	public FeedData getPostForUser(final String email, final int start, final int count) throws FriendBookFeedException {
 		FeedData feedData = cachedFeed.get(email);
 		List<Post> retrievedPostsForFeed = new ArrayList<>();

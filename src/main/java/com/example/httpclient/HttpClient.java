@@ -8,30 +8,31 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.stereotype.Service;
 
 import com.example.entity.Post;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Service
 public class HttpClient {
-	private static final String REQUEST_URL = "http://localhost:8081/printjson/";
+	private static final String DEFAULT_REQUEST_URL = "http://localhost:8081/feeds/v1/getAllFeeds";
 	// Create a new instance of http client which will connect to REST api over
 	// network
 	private static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-
-	public static void main(String[] args) throws Exception {
-		// Demo Get request
-		demoGetRESTAPI();
-
-		// Demo Post request
-		// demoPostRESTAPI();
-	}
+	private static String REQUEST_URL = System.getenv().get("POST_SERVICE_URL");
+	
+	
 
 	public static void demoGetRESTAPI() throws Exception {
 		try {
 			// Define a HttpGet request; You can choose between HttpPost, HttpDelete or
 			// HttpPut also.
 			// Choice depends on type of method you will be invoking.
+			if(REQUEST_URL == null)
+			{
+				REQUEST_URL = DEFAULT_REQUEST_URL;
+			}
 			HttpGet getRequest = new HttpGet(REQUEST_URL);
 
 			// Set the API media type in http accept header
