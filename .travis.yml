@@ -6,7 +6,8 @@ script:
    - docker image ls
    - docker-compose up -d
    - docker-compose ps
-   - docker-compose logs feedssvc
+   - docker-compose logs feedsvc
+   - docker-compose logs Feeds
    - curl https://localhost:8082
    - curl https://localhost:8080
    - curl https://localhost:8080/feeds/v1/getAllFeeds
