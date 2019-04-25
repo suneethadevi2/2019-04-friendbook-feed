@@ -7,7 +7,13 @@ script:
    - docker-compose up -d
    - docker-compose ps
    - docker-compose logs feedsvc
-   - docker-compose logs Feeds
-   - curl https://localhost:8082
-   - curl https://localhost:8080
-   - curl https://localhost:8080/feeds/v1/getAllFeeds
+   - curl http://localhost:8080
+   - curl http://localhost:8080/feeds/v1/getAllFeeds
+after_success:
+  - docker image ls
+  - echo userId is $DOCKER_USERID
+  - docker image tag friendbookfeedservice $DOCKER_USERID/friendbookfeedservice 
+  - docker login -u $DOCKER_USERID -p $DOCKER_PASSWORD
+  - docker image push $DOCKER_USERID/friendbookfeedservice 
+  - docker logout
+  
