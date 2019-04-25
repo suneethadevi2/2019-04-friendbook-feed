@@ -1,0 +1,13 @@
+services:
+  - docker
+ 
+ script:
+   - docker image ls
+   - docker-compose build
+   - docker image ls
+   - docker-compose up -d
+   - docker-compose ps
+   - docker-compose logs feedssvc
+   - curl https://localhost:8082
+   - curl http://localhost:8080
+   - curl http://localhost:8080/feeds/v1/getAllFeeds
