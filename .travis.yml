@@ -1,6 +1,6 @@
 services:
   - docker
- script:
+script:
    - docker image ls
    - docker-compose build
    - docker image ls
