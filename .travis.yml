@@ -1,19 +1,20 @@
 services:
   - docker
 script:
-   - docker image ls
-   - docker-compose build
-   - docker image ls
-   - docker-compose up -d
-   - docker-compose ps
-   - docker-compose logs feedsvc
-   - curl http://localhost:8080
-   - curl http://localhost:8080/feeds/v1/getAllFeeds
+  - docker image ls
+  - docker-compose build
+  - docker image ls
+  - docker-compose up -d
+  - docker-compose ps
+  - docker-compose logs feedsvc
+  - curl http://localhost:8080
+  - curl http://localhost:8080/feeds/v1/getAllFeeds
+  - docker-compose logs feedsvc
+
 after_success:
   - docker image ls
   - echo userId is $DOCKER_USERID
-  - docker image tag friendbookfeedservice $DOCKER_USERID/friendbookfeedservice 
+  - docker image tag friendbookfeedservice $DOCKER_USERID/friendbookfeedservice
   - docker login -u $DOCKER_USERID -p $DOCKER_PASSWORD
-  - docker image push $DOCKER_USERID/friendbookfeedservice 
+  - docker image push $DOCKER_USERID/friendbookfeedservice
   - docker logout
-  
